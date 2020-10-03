@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Личный кабинет</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script src="funcForServer.js"></script>
+    <link rel="stylesheet" type="text/css" href="myStyle.css">
+  </head>
+  <body onload="ListTasks()">
+
+    <div id="example"></div>
+
+    <script type="text/babel">
+
+    function NameUser() {
+        var name = document.cookie.split('=');
+        document.getElementById('nameUser').innerHTML = name[1];
+    }
+
+    function ListTasks () {
+        var list = GetList('/jobs');
+
+        for (var i = 0; i < list.length; i++) {
+            var name = list[i].name;
+            var myLi = document.createElement('li');
+            var linkA = document.createElement('a');
+            var textElem = document.createTextNode(name);
+
+            linkA.setAttribute('href', "prototypeTasks.html");
+            linkA.innerHTML = name;
+            myLi.appendChild(linkA);
+
+            document.getElementById('myTasks').appendChild(myLi);
+        }
+        ListSystems();
+        QueueTasks();
+        NameUser();
+    }
+
+    function ListSystems () {
+        var list = GetList('/systems');
+
+        for (var i = 0; i < list.length; i++) {
+            var name = list[i].name;
+            var myLi = document.createElement('li');
+            var linkA = document.createElement('a');
+            var textElem = document.createTextNode(name);
+
+            linkA.setAttribute('href', "newSystem.html");
+            linkA.innerHTML = name;
+            myLi.appendChild(linkA);
+
+            document.getElementById('listSystem').appendChild(myLi);
+        }
+    }
+
+    function QueueTasks () {
+        var list = GetList('/notreadytasks');
+
+        for (var i = 0; i < list.length; i++) {
+            var name = list[i].name;
+            var myLi = document.createElement('li');
+            var linkA = document.createElement('a');
+            var textElem = document.createTextNode(name);
+
+            linkA.setAttribute('href', "viewTask.html");
+            linkA.innerHTML = name;
+            myLi.appendChild(linkA);
+
+            document.getElementById('queueTasks').appendChild(myLi);
+        }
+    }
+
+    class Clock extends React.Component {
+        constructor (props) {
+            super (props);
+            this.state = {
+                hour: this.correctHours(),
+                minute: this.correctMinutes(),
+                second: this.correctSeconds()
+            };
+            this.dynamicClock();
+        };
+
+        dynamicClock=()=> {
+            setInterval(()=>{
+                this.setState({
+                hour: this.correctHours(),
+                minute: this.correctMinutes(),
+                second: this.correctSeconds()
+                })
+            }, 1000);
+
+        };
+
+        correctHours=()=> {
+            var h=(new Date()).getHours();
+            if (h<10)
+                return '0'+h;
+            else return h;
+        }
+
+        correctMinutes=()=> {
+            var m=(new Date()).getMinutes();
+            if (m<10)
+                return '0'+m;
+            else return m;
+        }
+
+        correctSeconds=()=> {
+            var s=(new Date()).getSeconds();
+            if (s<10)
+                return '0'+s;
+            else return s;
+        }
+
+        render () {
+            return (
+                <h2 className="ttime">
+                    {this.state.hour}:
+                    {this.state.minute}:
+                    {this.state.second}
+                </h2>
+            );
+        }
+    }
+
+    class MyDate extends React.Component {
+        constructor (props) {
+            super (props);
+            this.state = {
+                day: this.correctDay(),
+                month: this.correctMonth(),
+                year: (new Date()).getFullYear()
+            };
+            this.dynamicData();
+        };
+
+        dynamicData=()=> {
+            setInterval(()=>{
+                this.setState({
+                    day: this.correctDay(),
+                    month: this.correctMonth(),
+                    year: (new Date()).getFullYear()
+                })
+            }, 1000);
+
+        };
+
+        correctMonth=()=> {
+        var m = (new Date()).getMonth() + 1;
+        if (m<10)
+            return '0'+m;
+        else return m;
+        }
+
+        correctDay=()=> {
+            var d=(new Date()).getDate();
+            if (d<10)
+                return '0'+d;
+            else return d;
+        }
+
+        render () {
+            return (
+                <h2 className="ttime">
+                    {this.state.day}.
+                    {this.state.month}.
+                    {this.state.year}
+                </h2>
+            );
+        }
+    }
+
+    function GoToTask() {
+        window.location.href = "newTask.html";
+    }
+
+    function GoToStart() {
+        window.location.href = "index.html";
+    }
+
+    function GoToSystem() {
+        window.location.href = "newSystem.html";
+    }
+
+    const app = document.getElementById('example');
+    ReactDOM.render(
+    <div>
+        <div className = "boxTitle account">
+        Личный кабинет пользователя:&nbsp;
+        <i><label value="username" id="nameUser"></label></i>
+        </div>
+        <button className="btn in account">Справка</button>
+        <button className="btn in account two" onClick={GoToStart}>Выход</button>
+
+        <div className="boxAccount" >
+            <h2 className="tasks" > Список возможных задач </h2>
+            <div className="boxAccount info">
+                <ul type="circle" className="lists" id="myTasks">
+                </ul>
+            </div>
+            <button className="btn in tasks" onClick={GoToTask}>Добавить задачу</button>
+        </div>
+
+        <div className="boxAccount queue" >
+            <h2 className="tasks" > Очередь задач </h2>
+            <div className="boxAccount queue info">
+                <ul type="circle" className="lists" id="queueTasks">
+                </ul>
+            </div>
+        </div>
+
+        <div className="boxAccount" >
+            <h2 className="tasks" > Вычислительные системы </h2>
+            <div className="boxAccount info">
+                <ul type="circle" className="lists" id="listSystem">
+                </ul>
+            </div>
+            <button className="btn in tasks systems" onClick={GoToSystem}>Добавить Вычислительную систему</button>
+        </div>
+
+        <div className="boxAccount time" >
+            <h2 className="times">Время:</h2>
+            <Clock/>
+            <h2 className="times">Дата:</h2>
+            <MyDate/>
+        </div>
+
+        <div className="boxAccount friends" >
+            <h2 className="tasks" > Друзья </h2>
+            <div className="boxAccount friends info">
+                <ul type="circle" className="lists">
+                    <li>user1</li>
+                    <li>user2</li>
+                    <li>user3</li>
+                    <li>user4</li>
+                </ul>
+            </div>
+            <button className="btn in friends">Написать</button>
+            <button className="btn in friends two">Добавить друга</button>
+            <br />
+            <button className="btn in friends three">Создать группу</button>
+            <button className="btn in friends three">Группы</button>
+        </div>
+
+    </div>
+    , app);
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Задача</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="myStyle.css">
+  </head>
+  <body>
+
+    <div id="example"></div>
+
+    <script type="text/babel">
+
+    function GoToPersonalAcc() {
+        window.location.href="personalAccount.html"
+    }
+
+    const app = document.getElementById('example');
+    ReactDOM.render(
+    <div>
+        <div className = "boxTitleTask" >
+        Задача: <i>Решение уравнения Пуассона</i>
+        </div>
+        <div>
+
+            <div className="boxAccount task ready">
+                <h2 className="tasks param" > Описание задачи: </h2>
+                <div className="boxAccount task info descript" id="newParam">
+                </div>
+            </div>
+
+            <div className="boxAccount task ready" >
+                <h2 className="tasks param" >История запусков: </h2>
+                <div className="boxAccount task info ready" id="newParam">
+                    <ul type="circle" className="lists">
+                        <li>    <p className="res">время1</p>   <p className="res">дата1</p>     <button className="btn in res" >Посмотреть</button> </li>
+                        <li>    <p className="res">время2</p>   <p className="res">дата2</p>     <button className="btn in res" >Посмотреть</button></li>
+                        <li>    <p className="res">время3</p>   <p className="res">дата3</p>     <button className="btn in res" >Посмотреть</button></li>
+                        <li>    <p className="res">время4</p>   <p className="res">дата4</p>     <button className="btn in res" >Посмотреть</button></li>
+                        <li>    <p className="res">время5</p>   <p className="res">дата5</p>     <button className="btn in res" >Посмотреть</button></li>
+                        <li>    <p className="res">время6</p>   <p className="res">дата6</p>     <button className="btn in res" >Посмотреть</button></li>
+                    </ul>
+                </div>
+            </div>
+            <button className="btn in addTask" >Новый запуск</button>
+            <button className="btn in acc" onClick={GoToPersonalAcc}>На главную</button>
+        </div>
+    </div>
+    , app);
+    </script>
+
+  </body>
+</html>

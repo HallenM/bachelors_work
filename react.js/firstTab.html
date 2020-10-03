@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Запуск задачи</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="myStyle.css">
+  </head>
+  <body>
+
+    <div id="example"></div>
+
+    <script type="text/babel">
+
+    function GoToPersonalAcc() {
+        window.location.href="personalAccount.html"
+    }
+
+    const app = document.getElementById('example');
+    ReactDOM.render(
+    <div>
+        <div className = "boxTitleTask" >
+        Запуск задачи: <i>Решение уравнения Пуассона</i>
+        </div>
+        <a href="firstTab.html" className="myTabs first">Параметры уравнения</a>
+        <a href="secondTab.html"className="myTabs first two">Параметры задачи</a>
+        <a href="thirdTab.html"className="myTabs first two">Параметры запуска</a>
+        <div className="boxAccount task start">
+
+            <p className="task status">Имя запуска:
+                <input type="text" className="start startup first"/>
+            </p>
+
+            <p className="task status next">Параметр 1:
+                <input type="text" className="start startup next"/>
+            </p>
+            <p className="task status next">Параметр 2:
+                <input type="text" className="start startup next"/>
+            </p>
+            <p className="task status next">Параметр 354654:
+                <input type="text" className="start startup next"/>
+            </p>
+            <p className="task status next">Параметр 4444444:
+                <input type="text" className="start startup next"/>
+            </p>
+            <p className="task status next">Параметр 5:
+                <input type="text" className="start startup next"/>
+            </p>
+            <p className="task status next">Параметр 5:
+                <input type="text" className="start startup next"/>
+            </p>
+            <p className="task status next">Параметр 5:
+                <input type="text" className="start startup next"/>
+            </p>
+
+            <button className="btn in acc start" onClick={GoToPersonalAcc}>На главную</button>
+        </div>
+    </div>
+    , app);
+    </script>
+
+  </body>
+</html>

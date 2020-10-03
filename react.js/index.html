@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Вход</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script src="funcForServer.js"></script>
+    <link rel="stylesheet" type="text/css" href="myStyle.css">
+  </head>
+  <body>
+
+    <div id="example"></div>
+
+    <script type="text/babel">
+
+    function Input() {
+        var login = document.getElementById("login").value;
+        var password = document.getElementById("password").value;
+        DataForInput(login, password);
+            //window.location.href = "personalAccount.html";
+    }
+
+    const app = document.getElementById('example');
+    ReactDOM.render(
+    <div>
+        <div className = "boxTitle">
+            Web cloud
+        </div>
+
+        <div className = "boxBody">
+        <br />
+            <p className="in"> Логин:
+                <input type="text" className="start" id="login"/>
+            </p>
+            <p className="in">Пароль:
+                <input type="password" className="start"id="password"/>
+            </p> <br />
+
+            <a href="">Забыли пароль</a>
+            <a href="registration.html">Зарегистрироваться</a>
+
+            <button className="btn in" onClick={Input}>Войти</button>
+        </div>
+    </div>
+    , app);
+    </script>
+
+  </body>
+</html>

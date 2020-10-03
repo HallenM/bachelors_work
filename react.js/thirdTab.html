@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Запуск задачи</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="myStyle.css">
+  </head>
+  <body>
+
+    <div id="example"></div>
+
+    <script type="text/babel">
+
+    function GoToPersonalAcc() {
+        window.location.href="personalAccount.html"
+    }
+
+    function StatusOfSystem () {
+
+    }
+
+    const app = document.getElementById('example');
+    ReactDOM.render(
+    <div>
+        <div className = "boxTitleTask" >
+        Запуск задачи: <i>Решение уравнения Пуассона</i>
+        </div>
+        <a href="firstTab.html" className="myTabs first four">Параметры уравнения</a>
+        <a href="secondTab.html"className="myTabs first two">Параметры задачи</a>
+        <a href="thirdTab.html"className="myTabs first three">Параметры запуска</a>
+        <div className="boxAccount task start">
+
+            <p className="task status">Вычислительная система:
+            <select className="date next" onChange={StatusOfSystem}>
+                <option value="0" selected="1">Выберите систему</option>
+                <option value="1"> Кластер НГУ</option>
+                <option value="2"> Локальная машина</option>
+                <option value="3"> Система</option>
+            </select>
+            </p>
+
+            <p className="task startup">Запустить на
+                <input type="number" className="start startup" id="core" min="1"/>
+                ядрах
+            </p>
+
+            <p className="task startup two">Число потоков
+                <input type="number" className="start startup two" id="core" min="1"/>
+            </p>
+
+
+            <div className="boxAccount status">
+                <h2 className="tasks param info" id="CalcSyst">Справка:</h2>
+                <br/>
+                <p className="task status info">Количество ядер:
+                    <input type="text" className="start system" id="core" readonly="readonly"/>
+                </p>
+                <p className="task status">Количество потоков:
+                    <input type="text" className="start system" id="thread" readonly="readonly"/>
+                </p>
+            </div>
+
+            <button className="btn in startup" >Выполнить</button>
+            <button className="btn in acc start" onClick={GoToPersonalAcc}>На главную</button>
+        </div>
+    </div>
+    , app);
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Добавить задачу</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="myStyle.css">
+  </head>
+  <body>
+
+    <div id="example"></div>
+
+    <script type="text/babel">
+
+    function CountFiles() {
+        var len = document.getElementById("newFiles");
+        if (len == 0)
+            document.getElementById("info").innerHTML='Файлы не выбраны';
+        else
+            document.getElementById("info").innerHTML='Выбран(-о) ' + len.files.length + ' файл(-ов)';
+    }
+
+    function GoToPersonalAcc() {
+        window.location.href="personalAccount.html"
+    }
+
+    /*function AddTask() {
+        var name = document.getElementById("nameTask").value;
+        var myLi = document.createElement('li');
+        var linkA = document.createElement('a');
+        var textElem = document.createTextNode(name);
+
+        linkA.href = "firstTab.html";
+        linkA.value = textElem;
+        myLi.appendChild(linkA);
+        myLi.appendChild(textElem);
+
+        var myWindow = window.open('personalAccount.html', 'myAcc');
+
+        document.getElementById('listTask').appendChild(myLi);
+
+        alert('Ваша задача успешно добавлена!');
+        window.location.href="personalAccount.html";
+    }*/
+
+    function AddParam() {
+        var text = document.getElementById("paramTask").value;
+        var mas = text.split(';');
+        var data = [];
+
+        for (var i = 0; i < mas.length; i++) {
+            data[i] = JSON.parse(mas[i]);
+        }
+
+        var check = document.getElementsByName('param');
+        var all = document.getElementsByName('allParam');
+
+        var count;
+        for (var i = 0; i < check; i++) {
+            if(check[i].checked) count ++;
+        }
+
+        check = check.length;
+
+        if(document.getElementById('pp').checked && (check == 0 || check != count)) {
+            all[0].checked = false;
+        }
+
+        /* добавление введённых параметров и вывод их на экран */
+        for (var i = 0; i < data.length; i++) {
+            var label = document.createElement('label');
+            var checkbox = document.createElement('input');
+            var textElem = document.createTextNode(data[i].name + ' ('+data[i].type+') от ' + data[i].min_value + ' до '+data[i].max_value);
+            var br = document.createElement('br');
+
+            checkbox.type = "checkbox";
+            checkbox.name = "param";
+            checkbox.className = "addParameters";
+            checkbox.id = "p" + i;
+            checkbox.value = textElem;
+
+            label.appendChild(checkbox);
+            label.appendChild(textElem);
+            label.appendChild(br);
+
+            document.getElementById('newParam').appendChild(label);
+        }
+    }
+
+    function CheckAll () {
+        var elements = document.getElementsByName('param');
+        if(document.getElementById('pp').checked) {
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].checked = true;
+            }
+        }
+        else
+        for (var i = 0; i < elements.length; i++)
+            elements[i].checked = false;
+    }
+
+    function DeleteParam () {
+        var checkboxes = document.getElementsByName('param');
+        var label = document.getElementsByTagName('label');
+
+        /* 1 - 3 метки не относятся к данному блоку */
+        for (var i = 0, j = 3; i < checkboxes.length; i++, j++) {
+            if(checkboxes[i].checked) {
+                checkboxes[i].remove();
+                label[j].remove();
+            }
+        }
+    }
+
+    const app = document.getElementById('example');
+    ReactDOM.render(
+    <div>
+        <div className = "boxTitleTask" >
+        Добавить задачу
+        </div>
+        <div>
+            <p className="task">Имя:
+                <input type="text" className="start task" id="nameTask" />
+            </p>
+            <p className="task">Описание:
+                <textarea rows="4" cols="36" name="text" id="taskArea" className="taskText" placeholder="(можно добавить ссылку с описанием)" ></textarea>
+            </p>
+            <p className="taskCode">Код решателя:
+                <br/>
+                <label for="newFiles" className="btn in newT">Выбрать файлы</label>
+                <label className="info" id="info">Файлы не выбраны</label>
+                <input type="file" multiple className="newT" name="files" id="newFiles" onChange={CountFiles}/>
+            </p>
+
+            <div className="boxAccount task">
+                <h2 className="tasks param" > Параметры: </h2>
+                <button className="btn in param">Справка</button>
+                <br/>
+                <textarea rows="12" cols="52" name="text" id="paramTask" className="taskText new" placeholder="Введите параметры" ></textarea>
+                <br/>
+                <button className="btn in addParam" onClick={AddParam}>Добавить параметры</button>
+            </div>
+
+            <div className="boxAccount task" >
+                <h2 className="tasks param" > Добавленные параметры: </h2>
+                <div className="boxAccount task info" id="newParam">
+                    <input type="checkbox" className="addParameters" name="allParam" id="pp" onChange={CheckAll}/>
+                    <label for="pp" className="addParameters" name="ppLabel">Выбрать все параметры</label>
+                    <br/>
+                </div>
+                <button className="btn in delParam" onClick={DeleteParam}>Удалить параметр</button>
+            </div>
+            <button className="btn in addTask" >Добавить задачу</button>
+            <button className="btn in acc" onClick={GoToPersonalAcc}>На главную</button>
+        </div>
+    </div>
+    , app);
+    </script>
+
+  </body>
+</html>
